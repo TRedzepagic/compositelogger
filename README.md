@@ -9,9 +9,12 @@ logs "github.com/TRedzepagic/compositelogger/logs" (I did my coding inside $GOPA
 "github.com/TRedzepagic/logs"
 
 then do :
-go mod init "foldername"
-go run main.go
 
-it will import my "logs" helper (and everything else) outside of $GOPATH.
+"go mod init "foldername"
+"go run main.go"
+
+in the terminal.
+
+It will import my "logs" helper (and everything else) outside of $GOPATH.
 
 NOTE: Database is named "LOGGER" on mysql server, table is named "LOGS". (root@localhost) on my end.
