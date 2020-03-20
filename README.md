@@ -19,4 +19,12 @@ in the terminal.
 
 It will import my "logs" helper (and everything else) outside of $GOPATH.
 
+
+
 NOTE: Database is named "LOGGER" on mysql server, table is named "LOGS". (root@localhost) on my end.
+
+If you have trouble (First time creating DB) with accessing the root account you can try :
+
+"ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';"
+
+inside the mysql shell.
