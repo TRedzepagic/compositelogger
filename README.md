@@ -38,7 +38,7 @@ CREATE TABLE LOGS
     PRIMARY KEY (id)
 );
 
-This is used to create the exact table I have. 
+This is used to create the exact table I have.
 If you have issues accessing the DB via Go code, you can try:
 
 "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';"
