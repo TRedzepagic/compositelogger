@@ -1,10 +1,14 @@
 # compositelogger
 My complete "composite" logger.
 
-"Logs" helper for private project (composite logging) can be found in its own repo (don't know if this is correct practice) as well as here.
+The "Logs" helper can be found in its own repo (don't know if this is correct practice) as well as here.
 
-For a demonstration of module functionality, it's just necessary to download the driver code, then do
+For a demonstration of module functionality, it's just necessary to download the driver code (main.go), then change
 
+logs "github.com/TRedzepagic/compositelogger/logs" (I did my coding inside $GOPATH) to
+"github.com/TRedzepagic/logs"
+
+then do :
 go mod init "foldername"
 go run main.go
 
