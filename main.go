@@ -3,7 +3,7 @@ package main
 import (
 	"log/syslog"
 
-	logs "github.com/TRedzepagic/logger/logs"
+	logs "github.com/TRedzepagic/compositelogger/logs"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/mkmueller/golog"
 )
