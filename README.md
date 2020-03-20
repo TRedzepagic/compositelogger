@@ -3,6 +3,8 @@ My complete "composite" logger.
 
 The "Logs" helper can be found in its own repo (don't know if this is correct practice) as well as here.
 
+If errors occurr, please go get the necessary packages.
+
 For a demonstration of module functionality, it's just necessary to download the driver code (main.go), then change
 
 logs "github.com/TRedzepagic/compositelogger/logs" (I did my coding inside $GOPATH) to
