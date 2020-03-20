@@ -1,5 +1,5 @@
 # compositelogger
-My complete "composite" logger (Practice project).
+My complete "composite" logger (practice project).
 
 The "Logs" helper can be found in its own repo (don't know if this is correct practice) as well as here.
 
