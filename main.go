@@ -12,18 +12,18 @@ func main() {
 	filepath1 := "logfile1"
 	filepath2 := "logfile2"
 
-	filelogger1 := logs.FileLogger.NewFileLogger(logs.FileLogger{}, filepath1)
+	filelogger1 := logs.NewFileLogger(filepath1)
 	defer filelogger1.Close()
 
-	filelogger2 := logs.FileLogger.NewFileLogger(logs.FileLogger{}, filepath2)
+	filelogger2 := logs.NewFileLogger(filepath2)
 	defer filelogger2.Close()
 
-	stdoutLog := logs.StdLogger.NewStdLogger(logs.StdLogger{})
+	stdoutLog := logs.NewStdLogger()
 	defer stdoutLog.Close()
 
-	systemlogger, _ := logs.SysLogger.NewSysLogger(logs.SysLogger{}, syslog.LOG_NOTICE, golog.LstdFlags)
+	systemlogger, _ := logs.NewSysLogger(syslog.LOG_NOTICE, golog.LstdFlags)
 
-	databaseLog := logs.DBLogger.NewDBLogger(logs.DBLogger{}, logs.DatabaseConfiguration())
+	databaseLog := logs.NewDBLogger(logs.DatabaseConfiguration())
 
 	wantDebug := true
 
@@ -31,7 +31,7 @@ func main() {
 	//loggerino := golog.New("filelogtest")
 	//All we need to do is to pass it as an argument to the NewCustomLogger function.
 
-	log := logs.CompositeLog.NewCustomLogger(logs.CompositeLog{}, wantDebug, filelogger1, filelogger2, stdoutLog, systemlogger, databaseLog)
+	log := logs.NewCustomLogger(wantDebug, filelogger1, filelogger2, stdoutLog, systemlogger, databaseLog)
 	logs.Info(log, "info")
 	logs.Infof(log, "%s", "infof")
 	logs.Warn(log, "warn")

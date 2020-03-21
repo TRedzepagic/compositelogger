@@ -63,7 +63,8 @@ func (flogger FileLogger) SetPrefix(s string) {
 }
 
 //NewFileLogger creates a new file logger (FileLogger)
-func (flogger FileLogger) NewFileLogger(path string) FileLogger {
+func NewFileLogger(path string) FileLogger {
+	var flogger FileLogger
 	f, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
@@ -74,7 +75,8 @@ func (flogger FileLogger) NewFileLogger(path string) FileLogger {
 }
 
 //NewStdLogger creates a new stdout logger (StdLogger)
-func (stdlogger StdLogger) NewStdLogger() StdLogger {
+func NewStdLogger() StdLogger {
+	var stdlogger StdLogger
 	f, err := os.OpenFile("/dev/stdout", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
@@ -105,7 +107,8 @@ func (stdlogger StdLogger) SetPrefix(s string) {
 }
 
 //NewSysLogger creates a new system logger (SysLogger)
-func (syslogger SysLogger) NewSysLogger(prio syslog.Priority, flag int) (*log.Logger, error) {
+func NewSysLogger(prio syslog.Priority, flag int) (*log.Logger, error) {
+	var syslogger SysLogger
 	syslogger.logger, syslogger.err = syslog.NewLogger(prio, flag)
 	return syslogger.logger, syslogger.err
 }
@@ -126,7 +129,8 @@ func (syslogger SysLogger) Printf(format string, v ...interface{}) {
 }
 
 //NewDBLogger routes the DB connection from "DatabaseConfiguration" to the DB logger, then creates it.
-func (dblog DBLogger) NewDBLogger(db *sql.DB) DBLogger {
+func NewDBLogger(db *sql.DB) DBLogger {
+	var dblog DBLogger
 	dblog.database = db
 	dblog.logger = golog.New()
 	return dblog
@@ -182,10 +186,11 @@ type CompositeLog struct {
 
 //NewCustomLogger adds all passed loggers into a slice of SuperLoggers (Variadic args...SuperLogger, proizvoljan broj loggera)
 //We see here that we can add more loggers (we just need to pass them through)
-func (biglog CompositeLog) NewCustomLogger(flag bool, args ...SuperLogger) CompositeLog {
-	biglog.slicelog = args
-	biglog.flag = flag
-	return biglog
+func NewCustomLogger(flag bool, args ...SuperLogger) CompositeLog {
+	var compositelogger CompositeLog
+	compositelogger.slicelog = args
+	compositelogger.flag = flag
+	return compositelogger
 }
 
 //The following functions change the prefix, then call each of the loggers' Print/f functions respectively.
