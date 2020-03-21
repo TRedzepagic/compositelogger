@@ -184,7 +184,7 @@ type CompositeLog struct {
 	flag     bool
 }
 
-//NewCustomLogger adds all passed loggers into a slice of SuperLoggers (Variadic args...SuperLogger, proizvoljan broj loggera)
+//NewCustomLogger adds all passed loggers into a slice of SuperLoggers (Variadic args...SuperLogger)
 //We see here that we can add more loggers (we just need to pass them through)
 func NewCustomLogger(flag bool, args ...SuperLogger) CompositeLog {
 	var compositelogger CompositeLog
