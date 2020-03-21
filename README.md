@@ -17,14 +17,15 @@ then do :
 
 in the terminal.
 
-It will import my "logs" helper (and everything else) outside of $GOPATH.
+It will import my "logs" helper (and everything else), thus working outside of $GOPATH.
 
 
 
 NOTE: Database is named "LOGGER" on mysql server, table is named "LOGS". (root@localhost) on my end.
 
 To setup the database you need to install the mysql-server, which you can look up online.
-Inside the mysql shell, type these commands :
+
+To get the exact same table as me, inside the mysql shell, type these commands :
 
 CREATE DATABASE LOGGER;
 USE LOGGER;
@@ -38,10 +39,9 @@ CREATE TABLE LOGS
     PRIMARY KEY (id)
 );
 
-This is used to create the exact table I have.
 If you have issues accessing the DB via Go code, you can try:
 
 "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';"
 inside the mysql shell.
 
-(Sets root password to "password", while this obviously isn't desired behavior, it's done to make the program work, you can use other passwords and change it in code accordingly).
+(Sets root password to "password", while this obviously isn't desired/smart behavior, it's done to make the program work, you can use other passwords and change it in code accordingly).
