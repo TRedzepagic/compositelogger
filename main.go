@@ -28,11 +28,12 @@ func main() {
 	wantDebug := true
 
 	//We can easily add another logger, for example:
-	//loggerino := golog.New("filelogtest") and all we need to do is to pass it as an argument to the NewCustomLogger function.
+	//loggerino := golog.New("filelogtest")
+	//All we need to do is to pass it as an argument to the NewCustomLogger function.
 
 	log := logs.CompositeLog.NewCustomLogger(logs.CompositeLog{}, wantDebug, filelogger1, filelogger2, stdoutLog, systemlogger, databaseLog)
 	logs.Info(log, "info")
-	logs.Infof(log, "%s", "info")
+	logs.Infof(log, "%s", "infof")
 	logs.Warn(log, "warn")
 	logs.Warnf(log, "%s", "warnf")
 	logs.Debug(log, "debug")
