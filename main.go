@@ -25,14 +25,14 @@ func main() {
 
 	databaseLog := logs.DBLogger.NewDBLogger(logs.DBLogger{}, logs.DatabaseConfiguration())
 
-	zelimDebug := true
+	wantDebug := true
 
 	//We can easily add another logger, for example:
 	//loggerino := golog.New("filelogtest") and all we need to do is to pass it as an argument to the NewCustomLogger function.
 
-	log := logs.CompositeLog.NewCustomLogger(logs.CompositeLog{}, zelimDebug, filelogger1, filelogger2, stdoutLog, systemlogger, databaseLog)
-	logs.Info(log, "OMAROVIC")
-	logs.Infof(log, "%s", "OMAROVIC")
+	log := logs.CompositeLog.NewCustomLogger(logs.CompositeLog{}, wantDebug, filelogger1, filelogger2, stdoutLog, systemlogger, databaseLog)
+	logs.Info(log, "info")
+	logs.Infof(log, "%s", "info")
 	logs.Warn(log, "warn")
 	logs.Warnf(log, "%s", "warnf")
 	logs.Debug(log, "debug")
