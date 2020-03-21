@@ -233,7 +233,7 @@ func Warnf(composite CompositeLog, format string, v ...interface{}) {
 func Error(composite CompositeLog, v ...interface{}) {
 
 	for _, logger := range composite.slicelog {
-		logger.SetPrefix("Info:")
+		logger.SetPrefix("ERROR:")
 		logger.Println(v)
 	}
 
@@ -243,7 +243,7 @@ func Error(composite CompositeLog, v ...interface{}) {
 func Errorf(composite CompositeLog, format string, v ...interface{}) {
 
 	for _, logger := range composite.slicelog {
-		logger.SetPrefix("ERROR:")
+		logger.SetPrefix("ERRORf:")
 		logger.Printf(format, v)
 	}
 
@@ -264,7 +264,7 @@ func Debug(composite CompositeLog, v ...interface{}) {
 func Debugf(composite CompositeLog, format string, v ...interface{}) {
 	if composite.flag {
 		for _, logger := range composite.slicelog {
-			logger.SetPrefix("ERROR:")
+			logger.SetPrefix("DEBUGf:")
 			logger.Printf(format, v)
 		}
 	}
