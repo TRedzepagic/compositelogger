@@ -18,61 +18,52 @@ type SuperLogger interface {
 	SetPrefix(s string)
 }
 
-//FileLogger ..
+//FileLogger subclass
 type FileLogger struct {
 	logger *golog.Logger
 	fd     *os.File
 }
 
-//StdLogger ..
+//StdLogger subclass
 type StdLogger struct {
 	logger *golog.Logger
 	fd     *os.File
 }
 
-//SysLogger ..
+//SysLogger subclass
 type SysLogger struct {
 	logger *log.Logger
 	err    error
 }
 
-//DBLogger ..
+//DBLogger subclass
 type DBLogger struct {
 	database *sql.DB
 	logger   *golog.Logger
 }
 
-//DBData for easy parsing
-type DBData struct {
-	Prefix string
-	Date   string
-	Time   string
-	Text   string
-	Debug  string
-}
-
-//Close je wrapper za filelogger
+//Close closes the IO for the logger
 func (flogger *FileLogger) Close() {
 	flogger.fd.Close()
 }
 
-//Println je wrapper za filelogger
+//Println wraps the Println function of the logger
 func (flogger FileLogger) Println(v ...interface{}) {
 	flogger.logger.Println(v...)
 }
 
-//Printf je wrapper za filelogger
+//Printf wraps the Printf function of the logger
 func (flogger FileLogger) Printf(format string, v ...interface{}) {
 	flogger.logger.Printf(format, v...)
 }
 
-//SetPrefix je wrapper..
+//SetPrefix wraps the SetPrefix function of the logger
 func (flogger FileLogger) SetPrefix(s string) {
 	flogger.logger.SetPrefix(s)
 }
 
-//MakeLogger za FileLogger
-func (flogger FileLogger) MakeLogger(path string) FileLogger {
+//NewFileLogger creates a new file logger (FileLogger)
+func (flogger FileLogger) NewFileLogger(path string) FileLogger {
 	f, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
@@ -82,8 +73,8 @@ func (flogger FileLogger) MakeLogger(path string) FileLogger {
 	return flogger
 }
 
-//MakeLogger za StdLogger
-func (stdlogger StdLogger) MakeLogger() StdLogger {
+//NewStdLogger creates a new stdout logger (StdLogger)
+func (stdlogger StdLogger) NewStdLogger() StdLogger {
 	f, err := os.OpenFile("/dev/stdout", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
@@ -93,55 +84,55 @@ func (stdlogger StdLogger) MakeLogger() StdLogger {
 	return stdlogger
 }
 
-//Close je wrapper za stdlogger
+//Close closes the IO for the logger
 func (stdlogger *StdLogger) Close() {
 	stdlogger.fd.Close()
 }
 
-//Println je wrapper za stdlogger
+//Println wraps the Println function of the logger
 func (stdlogger StdLogger) Println(v ...interface{}) {
 	stdlogger.logger.Println(v...)
 }
 
-//Printf je wrapper za StdLogger
+//Printf wraps the Printf function of the logger
 func (stdlogger StdLogger) Printf(format string, v ...interface{}) {
 	stdlogger.logger.Printf(format, v...)
 }
 
-//SetPrefix je wrapper za StdLogger
+//SetPrefix wraps the SetPrefix function of the logger
 func (stdlogger StdLogger) SetPrefix(s string) {
 	stdlogger.logger.SetPrefix(s)
 }
 
-//MakeLogger za SysLogger, pozivam funkciju iz sysloga
-func (syslogger SysLogger) MakeLogger(prio syslog.Priority, flag int) (*log.Logger, error) {
+//NewSysLogger creates a new system logger (SysLogger)
+func (syslogger SysLogger) NewSysLogger(prio syslog.Priority, flag int) (*log.Logger, error) {
 	syslogger.logger, syslogger.err = syslog.NewLogger(prio, flag)
 	return syslogger.logger, syslogger.err
 }
 
-//SetPrefix je wrapper za SysLogger
+//SetPrefix wraps the SetPrefix function of the logger
 func (syslogger SysLogger) SetPrefix(s string) {
 	syslogger.logger.SetPrefix(s)
 }
 
-//Println je wrapper za filelogger
+//Println wraps the Println function of the logger
 func (syslogger SysLogger) Println(v ...interface{}) {
 	syslogger.logger.Println(v...)
 }
 
-//Printf za SysLogger
+//Printf wraps the Printf function of the logger
 func (syslogger SysLogger) Printf(format string, v ...interface{}) {
 	syslogger.logger.Printf(format, v...)
 }
 
-//MakeLogger za DB ..
-func (dblog DBLogger) MakeLogger(db *sql.DB) DBLogger {
+//NewDBLogger routes the DB connection from "DatabaseConfiguration" to the DB logger, then creates it.
+func (dblog DBLogger) NewDBLogger(db *sql.DB) DBLogger {
 	dblog.database = db
 	dblog.logger = golog.New()
 	return dblog
 }
 
-//DatabaseConfiguration je postavljanje konekcije na mySQL server
+//DatabaseConfiguration - sets up the DB connection, user:root, password:password (testing purposes)
 func DatabaseConfiguration() *sql.DB {
 	conn, err := sql.Open("mysql",
 		"root:password@tcp(127.0.0.1:3306)/LOGGER")
@@ -151,7 +142,7 @@ func DatabaseConfiguration() *sql.DB {
 	return conn
 }
 
-//ToDB upisivanje u bazu
+//ToDB writes to database
 func (dblog DBLogger) ToDB(str string) {
 	stmt, err := dblog.database.Prepare("INSERT INTO LOGS(PREFIX, DATE, TIME, TEXT) VALUES(?, ?, ?, ?)")
 	if err != nil {
@@ -166,37 +157,38 @@ func (dblog DBLogger) ToDB(str string) {
 	}
 }
 
-//Println za DB je wrapper za ToDB, da bi se zadovoljio i-face
+//Println works differently for the database, converts the printed output to string, then passes it for database recording
 func (dblog DBLogger) Println(v ...interface{}) {
 	str := fmt.Sprint(v...)
 	dblog.ToDB(str)
 }
 
-//Printf za DB je wrapper za ToDB, da bi se zadovoljio i-face
+//Printf works differently for the database, converts the printed output to string, then passes it for database recording
 func (dblog DBLogger) Printf(format string, v ...interface{}) {
 	str := fmt.Sprintf(format, v...)
 	dblog.ToDB(str)
 }
 
-//SetPrefix je wrapper za DBLogger
+//SetPrefix wraps the SetPrefix function of the logger
 func (dblog DBLogger) SetPrefix(s string) {
 	dblog.logger.SetPrefix(s)
 }
 
-//CompositeLog Potrebno radi debug flag..
+//CompositeLog structure was needed to implement the "true for debug, false for no debug" functionality.
 type CompositeLog struct {
 	slicelog []SuperLogger
 	flag     bool
 }
 
-//NewCustomLogger ubacuje sve loggere u jedan logger (Variadic args...SuperLogger, proizvoljan broj loggera). Flag koristim da omogucim debug/f ili ne.
+//NewCustomLogger adds all passed loggers into a slice of SuperLoggers (Variadic args...SuperLogger, proizvoljan broj loggera)
+//We see here that we can add more loggers (we just need to pass them through)
 func (biglog CompositeLog) NewCustomLogger(flag bool, args ...SuperLogger) CompositeLog {
 	biglog.slicelog = args
 	biglog.flag = flag
 	return biglog
 }
 
-//U funkcijama koje slijede mijenja se prefix, kako sam ja razumio da je poenta. Poziva se svacija SetPrefix i Print komanda ponaosob.
+//The following functions change the prefix, then call each of the loggers' Print/f functions respectively.
 
 //Info ..
 func Info(composite CompositeLog, v ...interface{}) {
@@ -257,7 +249,7 @@ func Errorf(composite CompositeLog, format string, v ...interface{}) {
 
 }
 
-//Debug ..
+//Debug (skipped if flag == false)
 func Debug(composite CompositeLog, v ...interface{}) {
 	if composite.flag {
 		for _, logger := range composite.slicelog {
@@ -268,7 +260,7 @@ func Debug(composite CompositeLog, v ...interface{}) {
 
 }
 
-//Debugf ..
+//Debugf (skipped if flag == false)
 func Debugf(composite CompositeLog, format string, v ...interface{}) {
 	if composite.flag {
 		for _, logger := range composite.slicelog {

@@ -12,23 +12,23 @@ func main() {
 	filepath1 := "logfile1"
 	filepath2 := "logfile2"
 
-	filelogger1 := logs.FileLogger.MakeLogger(logs.FileLogger{}, filepath1)
+	filelogger1 := logs.FileLogger.NewFileLogger(logs.FileLogger{}, filepath1)
 	defer filelogger1.Close()
 
-	filelogger2 := logs.FileLogger.MakeLogger(logs.FileLogger{}, filepath2)
+	filelogger2 := logs.FileLogger.NewFileLogger(logs.FileLogger{}, filepath2)
 	defer filelogger2.Close()
 
-	stdoutLog := logs.StdLogger.MakeLogger(logs.StdLogger{})
+	stdoutLog := logs.StdLogger.NewStdLogger(logs.StdLogger{})
 	defer stdoutLog.Close()
 
-	systemlogger, _ := logs.SysLogger.MakeLogger(logs.SysLogger{}, syslog.LOG_NOTICE, golog.LstdFlags)
+	systemlogger, _ := logs.SysLogger.NewSysLogger(logs.SysLogger{}, syslog.LOG_NOTICE, golog.LstdFlags)
 
-	databaseLog := logs.DBLogger.MakeLogger(logs.DBLogger{}, logs.DatabaseConfiguration())
+	databaseLog := logs.DBLogger.NewDBLogger(logs.DBLogger{}, logs.DatabaseConfiguration())
 
 	zelimDebug := true
 
-	//Mogu se dodati proizvoljni loggeri.
-	//NPR : loggerino := golog.New("filelogtest") bi pisao u navedeni file, a sve sto treba da uradimo jeste da ga dodamo u argumenta NewCustomLogger).
+	//We can easily add another logger, for example:
+	//loggerino := golog.New("filelogtest") and all we need to do is to pass it as an argument to the NewCustomLogger function.
 
 	log := logs.CompositeLog.NewCustomLogger(logs.CompositeLog{}, zelimDebug, filelogger1, filelogger2, stdoutLog, systemlogger, databaseLog)
 	logs.Info(log, "OMAROVIC")
