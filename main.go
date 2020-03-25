@@ -4,7 +4,7 @@ import (
 	"log"
 	"log/syslog"
 
-	logs "github.com/TRedzepagic/compositelogger/logs"
+	"github.com/TRedzepagic/compositelogger/logs"
 	_ "github.com/go-sql-driver/mysql"
 )
 

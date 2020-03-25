@@ -2,19 +2,15 @@
 My complete "composite" logger (practice project).
 
 ## How to run
-For a demonstration of module functionality, it's just necessary to download the driver code (main.go), then change
+For a demonstration of module functionality :
+
 ```
-logs "github.com/TRedzepagic/compositelogger/logs" (I did my coding inside $GOPATH) to
-"github.com/TRedzepagic/logs"
-```
-then execute the command :  
+Download "main.go", then execute these commands :  
 ```
 "go mod init "foldername"
 "go run main.go"
 ```  
 in the terminal.
-
-It will import my "logs" helper (and everything else), thus working outside of $GOPATH.
 
 &nbsp;
 
