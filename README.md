@@ -1,16 +1,6 @@
 # compositelogger
 My complete "composite" logger (practice project).
 
-The "Logs" helper can be found in its own repo (don't know if this is correct practice) as well as here.
-
-## If error occurs
-
-If "import" errors occur, please 
-```
-go get
-```
-the necessary packages.
-
 ## How to run
 For a demonstration of module functionality, it's just necessary to download the driver code (main.go), then change
 ```

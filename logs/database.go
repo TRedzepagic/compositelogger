@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+// Close closes the DB
+func (dblog *DBLogger) Close() {
+	dblog.database.Close()
+}
+
 // NewDBLogger routes the DB connection from "DatabaseConfiguration" to the DB logger, then creates it.
 func NewDBLogger(db *sql.DB) *DBLogger {
 	var dblog DBLogger

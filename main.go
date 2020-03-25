@@ -24,6 +24,7 @@ func main() {
 	systemlogger, _ := logs.NewSysLogger(syslog.LOG_NOTICE, log.LstdFlags)
 
 	databaseLog := logs.NewDBLogger(logs.DatabaseConfiguration())
+	defer databaseLog.Close()
 
 	wantDebug := true
 
