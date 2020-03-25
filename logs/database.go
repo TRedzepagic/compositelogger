@@ -22,7 +22,7 @@ func NewDBLogger(db *sql.DB) *DBLogger {
 // DatabaseConfiguration - sets up the DB connection, user:root, password:password (testing purposes)
 func DatabaseConfiguration() *sql.DB {
 	conn, err := sql.Open("mysql",
-		"root:password@tcp(127.0.0.1:3306)/LOGGER")
+		"compositelogger:Mystrongpassword1234$@tcp(127.0.0.1:3306)/LOGGER") //Configuration described in README.md
 	if err != nil {
 		log.Print(err)
 	}

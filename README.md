@@ -19,7 +19,7 @@ It will import my "logs" helper (and everything else), thus working outside of $
 &nbsp;
 &nbsp;
 
-**NOTE:** Database is named "LOGGER" on mysql server, table is named "LOGS". (root@localhost) on my end.
+**NOTE:** Database is named "LOGGER" on mysql server, table is named "LOGS".
 
 To setup the database you need to install the mysql-server, which you can look up online.
 
@@ -37,9 +37,16 @@ CREATE TABLE LOGS
     PRIMARY KEY (id)
 );
 ```
-If you have issues accessing the DB via Go code, you can try:
+While on the server, you can create a user with this command :
+
 ```
-"ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';"
-inside the mysql shell.
+"CREATE USER 'compositelogger'@'localhost' IDENTIFIED BY 'Mystrongpassword1234$';"
+
 ```
-(Sets root password to "password", while this obviously isn't desired/smart behavior, it's done to make the program work, you can use other passwords and change it in code accordingly).
+Then you need to grant the user access to our logging table, or else we will get an error :
+
+```
+"GRANT ALL PRIVILEGES ON LOGGER.LOGS TO 'compositelogger'@'localhost';"
+
+```
+Here we granted all privileges on our "LOGS" table to our user named "compositelogger".
