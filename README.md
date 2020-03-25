@@ -3,14 +3,14 @@ My complete "composite" logger (practice project).
 
 ## How to run
 
-###Cloning
+### Cloning
 You can "git clone" my repo with :
 
 ```
 "git clone https://github.com/TRedzepagic/compositelogger.git"
 ```
 
-###Module functionality :
+### Module functionality :
 
 ```
 Download "main.go"
@@ -21,7 +21,7 @@ Execute these commands :
 
 in the terminal.
 ``` 
-&nbsp;
+
 ## Database configuration
 To setup the database you need to install the mysql-server, which you can look up online.
 
