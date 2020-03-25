@@ -2,7 +2,15 @@
 My complete "composite" logger (practice project).
 
 ## How to run
-For a demonstration of module functionality :
+
+###Cloning
+You can "git clone" my repo with :
+
+```
+"git clone https://github.com/TRedzepagic/compositelogger.git"
+```
+
+###Module functionality :
 
 ```
 Download "main.go"
