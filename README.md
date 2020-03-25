@@ -4,16 +4,17 @@ My complete "composite" logger (practice project).
 ## How to run
 
 ### Cloning
-You can "git clone" my repo with :
+You can "git clone" my repo with (Entire repository):
 
 ```
 "git clone https://github.com/TRedzepagic/compositelogger.git"
 ```
 
-### Module functionality :
+### Module functionality
+Using go modules :
 
 ```
-Download "main.go"
+Download "main.go" to a folder with your name of choice
 Execute these commands :  
 
 "go mod init "foldername"
