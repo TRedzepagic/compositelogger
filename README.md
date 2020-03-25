@@ -12,7 +12,8 @@ Execute these commands :
 "go run main.go"
 
 in the terminal.
-``` &nbsp;
+``` 
+&nbsp;
 ## Database configuration
 To setup the database you need to install the mysql-server, which you can look up online.
 
