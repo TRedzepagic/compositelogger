@@ -1,11 +1,11 @@
 package main
 
 import (
+	"log"
 	"log/syslog"
 
 	logs "github.com/TRedzepagic/compositelogger/logs"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/mkmueller/golog"
 )
 
 func main() {
@@ -21,24 +21,25 @@ func main() {
 	stdoutLog := logs.NewStdLogger()
 	defer stdoutLog.Close()
 
-	systemlogger, _ := logs.NewSysLogger(syslog.LOG_NOTICE, golog.LstdFlags)
+	systemlogger, _ := logs.NewSysLogger(syslog.LOG_NOTICE, log.LstdFlags)
 
 	databaseLog := logs.NewDBLogger(logs.DatabaseConfiguration())
 
 	wantDebug := true
 
-	//We can easily add another logger, for example:
-	//loggerino := golog.New("filelogtest")
-	//All we need to do is to pass it as an argument to the NewCustomLogger function.
+	// We can easily add another logger, for example:
+	// loggerino := logs.NewFileLogger("newfileoutput")
+	// All we need to do is to pass it as an argument to the NewCustomLogger function.
 
 	log := logs.NewCustomLogger(wantDebug, filelogger1, filelogger2, stdoutLog, systemlogger, databaseLog)
-	logs.Info(log, "info")
-	logs.Infof(log, "%s", "infof")
-	logs.Warn(log, "warn")
-	logs.Warnf(log, "%s", "warnf")
-	logs.Debug(log, "debug")
-	logs.Debugf(log, "%s", "debugf")
-	logs.Error(log, "error")
-	logs.Errorf(log, "%s", "errorf")
+
+	log.Info("info")
+	log.Infof("%s", "infof")
+	log.Warn("warn")
+	log.Warnf("%s", "warnf")
+	log.Debug("debug")
+	log.Debugf("%s", "debugf")
+	log.Error("error")
+	log.Errorf("%s", "errorf")
 
 }
