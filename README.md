@@ -5,8 +5,9 @@ My complete "composite" logger (practice project).
 For a demonstration of module functionality :
 
 ```
-Download "main.go", then execute these commands :  
-```
+Download "main.go"
+Execute these commands :  
+
 "go mod init "foldername"
 "go run main.go"
 ```  

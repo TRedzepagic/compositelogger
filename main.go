@@ -9,10 +9,10 @@ import (
 )
 
 func main() {
-	filepath1 := "logfile1"
+	filepath := "logfile1"
 	filepath2 := "logfile2"
 
-	filelogger1 := logs.NewFileLogger(filepath1)
+	filelogger1 := logs.NewFileLogger(filepath)
 	defer filelogger1.Close()
 
 	filelogger2 := logs.NewFileLogger(filepath2)
