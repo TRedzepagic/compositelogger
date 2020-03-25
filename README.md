@@ -10,15 +10,13 @@ Execute these commands :
 
 "go mod init "foldername"
 "go run main.go"
-```  
+
 in the terminal.
-
-&nbsp;
-
-**NOTE:** Database is named "LOGGER" on mysql server, table is named "LOGS".
-
+``` &nbsp;
 ## Database configuration
 To setup the database you need to install the mysql-server, which you can look up online.
+
+**NOTE:** Database is named "LOGGER" on mysql server, table is named "LOGS".
 
 To get the exact same table as me, inside the mysql shell, type these commands :
 ```
