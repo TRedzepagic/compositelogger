@@ -8,17 +8,17 @@ type CompositeLog struct {
 
 // NewCustomLogger adds all passed loggers into a slice of SuperLoggers (Variadic args...SuperLogger)
 // We see here that we can add more loggers (we just need to pass them through)
-func NewCustomLogger(flag bool, args ...SuperLogger) CompositeLog {
+func NewCustomLogger(flag bool, args ...SuperLogger) *CompositeLog {
 	var compositelogger CompositeLog
 	compositelogger.slicelog = args
 	compositelogger.flag = flag
-	return compositelogger
+	return &compositelogger
 }
 
-// The following functions change the prefix, then call each of the loggers' Print/f functions respectively.
+// The following functions change the prefix, then call each of the loggers' Println/f functions respectively.
 
 // Info ..
-func (composite CompositeLog) Info(v ...interface{}) {
+func (composite *CompositeLog) Info(v ...interface{}) {
 	for _, logger := range composite.slicelog {
 		logger.SetPrefix("Info:")
 		logger.Println(v)
@@ -27,7 +27,7 @@ func (composite CompositeLog) Info(v ...interface{}) {
 }
 
 // Infof ..
-func (composite CompositeLog) Infof(format string, v ...interface{}) {
+func (composite *CompositeLog) Infof(format string, v ...interface{}) {
 
 	for _, logger := range composite.slicelog {
 		logger.SetPrefix("Infof:")
@@ -37,7 +37,7 @@ func (composite CompositeLog) Infof(format string, v ...interface{}) {
 }
 
 // Warn ..
-func (composite CompositeLog) Warn(v ...interface{}) {
+func (composite *CompositeLog) Warn(v ...interface{}) {
 
 	for _, logger := range composite.slicelog {
 		logger.SetPrefix("WARNING:")
@@ -47,7 +47,7 @@ func (composite CompositeLog) Warn(v ...interface{}) {
 }
 
 // Warnf ..
-func (composite CompositeLog) Warnf(format string, v ...interface{}) {
+func (composite *CompositeLog) Warnf(format string, v ...interface{}) {
 
 	for _, logger := range composite.slicelog {
 		logger.SetPrefix("WARNINGf:")
@@ -57,7 +57,7 @@ func (composite CompositeLog) Warnf(format string, v ...interface{}) {
 }
 
 // Error ..
-func (composite CompositeLog) Error(v ...interface{}) {
+func (composite *CompositeLog) Error(v ...interface{}) {
 
 	for _, logger := range composite.slicelog {
 		logger.SetPrefix("ERROR:")
@@ -67,7 +67,7 @@ func (composite CompositeLog) Error(v ...interface{}) {
 }
 
 // Errorf ..
-func (composite CompositeLog) Errorf(format string, v ...interface{}) {
+func (composite *CompositeLog) Errorf(format string, v ...interface{}) {
 
 	for _, logger := range composite.slicelog {
 		logger.SetPrefix("ERRORf:")
@@ -77,7 +77,7 @@ func (composite CompositeLog) Errorf(format string, v ...interface{}) {
 }
 
 // Debug (skipped if flag == false)
-func (composite CompositeLog) Debug(v ...interface{}) {
+func (composite *CompositeLog) Debug(v ...interface{}) {
 	if composite.flag {
 		for _, logger := range composite.slicelog {
 			logger.SetPrefix("DEBUG:")
@@ -88,7 +88,7 @@ func (composite CompositeLog) Debug(v ...interface{}) {
 }
 
 // Debugf (skipped if flag == false)
-func (composite CompositeLog) Debugf(format string, v ...interface{}) {
+func (composite *CompositeLog) Debugf(format string, v ...interface{}) {
 	if composite.flag {
 		for _, logger := range composite.slicelog {
 			logger.SetPrefix("DEBUGf:")

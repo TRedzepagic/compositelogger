@@ -7,11 +7,6 @@ import (
 	"time"
 )
 
-// Close closes the DB
-func (dblog *DBLogger) Close() {
-	dblog.database.Close()
-}
-
 // NewDBLogger routes the DB connection from "DatabaseConfiguration" to the DB logger, then creates it.
 func NewDBLogger(db *sql.DB) *DBLogger {
 	var dblog DBLogger
@@ -21,8 +16,7 @@ func NewDBLogger(db *sql.DB) *DBLogger {
 
 // DatabaseConfiguration - sets up the DB connection, user:root, password:password (testing purposes)
 func DatabaseConfiguration() *sql.DB {
-	conn, err := sql.Open("mysql",
-		"compositelogger:Mystrongpassword1234$@tcp(127.0.0.1:3306)/LOGGER") //Configuration described in README.md
+	conn, err := sql.Open("mysql", "compositelogger:Mystrongpassword1234$@tcp(127.0.0.1:3306)/LOGGER") //Configuration described in README.md
 	if err != nil {
 		log.Print(err)
 	}
@@ -30,7 +24,7 @@ func DatabaseConfiguration() *sql.DB {
 }
 
 // ToDB writes to database
-func (dblog DBLogger) ToDB(str string) {
+func (dblog *DBLogger) ToDB(str string) {
 	stmt, err := dblog.database.Prepare("INSERT INTO LOGS(PREFIX, DATE, TIME, TEXT) VALUES(?, ?, ?, ?)")
 	if err != nil {
 		log.Print(err)
@@ -41,4 +35,26 @@ func (dblog DBLogger) ToDB(str string) {
 	if err != nil {
 		log.Print(err)
 	}
+}
+
+// Println works differently for the database, converts the printed output to string, then passes it for database recording
+func (dblog *DBLogger) Println(v ...interface{}) {
+	str := fmt.Sprint(v...)
+	dblog.ToDB(str)
+}
+
+// Printf works differently for the database, converts the printed output to string, then passes it for database recording
+func (dblog *DBLogger) Printf(format string, v ...interface{}) {
+	str := fmt.Sprintf(format, v...)
+	dblog.ToDB(str)
+}
+
+// SetPrefix for DB
+func (dblog *DBLogger) SetPrefix(s string) {
+	dblog.prefix = s
+}
+
+// Close closes the DB
+func (dblog *DBLogger) Close() {
+	dblog.database.Close()
 }

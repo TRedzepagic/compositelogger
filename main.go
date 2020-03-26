@@ -29,7 +29,7 @@ func main() {
 	wantDebug := true
 
 	// We can easily add another logger, for example:
-	// loggerino := logs.NewFileLogger("newfileoutput")
+	//loggerino := logs.NewFileLogger("newfileoutput")
 	// All we need to do is to pass it as an argument to the NewCustomLogger function.
 
 	log := logs.NewCustomLogger(wantDebug, filelogger1, filelogger2, stdoutLog, systemlogger, databaseLog)
