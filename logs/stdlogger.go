@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// NewStdLogger creates a new stdout logger (StdLogger)
+// NewStdLogger creates a new stdout logger (StdLogger) by assigning the opened /dev/stdout to the file descriptor.
 func NewStdLogger() *StdLogger {
 	var stdlogger StdLogger
 	file, err := os.OpenFile("/dev/stdout", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
@@ -18,7 +18,7 @@ func NewStdLogger() *StdLogger {
 	return &stdlogger
 }
 
-// Println wraps the Println function of the logger
+// Println directly uses the file descriptors' Write()
 func (stdlogger *StdLogger) Println(v ...interface{}) {
 	text := fmt.Sprintln(v...)
 	date := fmt.Sprint(time.Now().Format("01-02-2006"))
@@ -28,7 +28,7 @@ func (stdlogger *StdLogger) Println(v ...interface{}) {
 	stdlogger.fd.Write(array)
 }
 
-// Printf wraps the Printf function of the logger
+// Printf directly uses the file descriptors' Write()
 func (stdlogger *StdLogger) Printf(format string, v ...interface{}) {
 	text := fmt.Sprintf(format, v...)
 	date := fmt.Sprint(time.Now().Format("01-02-2006"))
@@ -38,7 +38,7 @@ func (stdlogger *StdLogger) Printf(format string, v ...interface{}) {
 	stdlogger.fd.Write(array)
 }
 
-// SetPrefix wraps the SetPrefix function of the logger
+// SetPrefix sets the prefix of the logger
 func (stdlogger *StdLogger) SetPrefix(s string) {
 	stdlogger.stdloggerprefix = s
 }

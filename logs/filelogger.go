@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// NewFileLogger creates a new file logger (FileLogger)
+// NewFileLogger creates a new file logger (assigns the opened file to the file loggers' file descriptor)
 func NewFileLogger(path string) *FileLogger {
 	var flogger FileLogger
 	file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
@@ -18,7 +18,7 @@ func NewFileLogger(path string) *FileLogger {
 	return &flogger
 }
 
-// Println wraps the Println function of the logger
+// Println directly uses the file descriptors' Write()
 func (flogger *FileLogger) Println(v ...interface{}) {
 	text := fmt.Sprintln(v...)
 	date := fmt.Sprint(time.Now().Format("01-02-2006"))
@@ -28,7 +28,7 @@ func (flogger *FileLogger) Println(v ...interface{}) {
 	flogger.fd.Write(array)
 }
 
-// Printf wraps the Printf function of the logger
+// Printf directly uses the file descriptors' Write()
 func (flogger *FileLogger) Printf(format string, v ...interface{}) {
 	text := fmt.Sprintf(format, v...)
 	date := fmt.Sprint(time.Now().Format("01-02-2006"))
@@ -39,7 +39,7 @@ func (flogger *FileLogger) Printf(format string, v ...interface{}) {
 
 }
 
-// SetPrefix wraps the SetPrefix function of the logger
+// SetPrefix sets the prefix of the logger
 func (flogger *FileLogger) SetPrefix(s string) {
 	flogger.fileloggerprefix = s
 }

@@ -14,7 +14,7 @@ func NewDBLogger(db *sql.DB) *DBLogger {
 	return &dblog
 }
 
-// DatabaseConfiguration - sets up the DB connection, user:root, password:password (testing purposes)
+// DatabaseConfiguration - sets up the DB connection
 func DatabaseConfiguration() *sql.DB {
 	conn, err := sql.Open("mysql", "compositelogger:Mystrongpassword1234$@tcp(127.0.0.1:3306)/LOGGER") //Configuration described in README.md
 	if err != nil {
@@ -37,13 +37,13 @@ func (dblog *DBLogger) ToDB(str string) {
 	}
 }
 
-// Println works differently for the database, converts the printed output to string, then passes it for database recording
+// Println (for DB) converts the printed output to string, then passes it for database recording
 func (dblog *DBLogger) Println(v ...interface{}) {
 	str := fmt.Sprint(v...)
 	dblog.ToDB(str)
 }
 
-// Printf works differently for the database, converts the printed output to string, then passes it for database recording
+// Printf (for DB) converts the printed output to string, then passes it for database recording
 func (dblog *DBLogger) Printf(format string, v ...interface{}) {
 	str := fmt.Sprintf(format, v...)
 	dblog.ToDB(str)
@@ -54,7 +54,7 @@ func (dblog *DBLogger) SetPrefix(s string) {
 	dblog.prefix = s
 }
 
-// Close closes the DB
+// Close closes the DB connection
 func (dblog *DBLogger) Close() {
 	dblog.database.Close()
 }
