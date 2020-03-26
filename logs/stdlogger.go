@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// NewStdLogger creates a new stdout logger (StdLogger) by assigning the opened /dev/stdout to the file descriptor.
+// NewStdLogger creates a new stdout logger (StdLogger) by attaching the opened /dev/stdout to the file descriptor.
 func NewStdLogger() *StdLogger {
 	var stdlogger StdLogger
 	file, err := os.OpenFile("/dev/stdout", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)

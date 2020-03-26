@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// NewFileLogger creates a new file logger (assigns the opened file to the file loggers' file descriptor)
+// NewFileLogger creates a new file logger (attaches the opened/created file found at "path" to the file loggers' file descriptor)
 func NewFileLogger(path string) *FileLogger {
 	var flogger FileLogger
 	file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
