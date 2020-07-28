@@ -26,6 +26,8 @@ func DatabaseConfiguration() *sql.DB {
 // ToDB writes to database
 func (dblog *DBLogger) ToDB(str string) {
 	stmt, err := dblog.database.Prepare("INSERT INTO LOGS(PREFIX, DATE, TIME, TEXT) VALUES(?, ?, ?, ?)")
+	defer stmt.Close()
+
 	if err != nil {
 		log.Print(err)
 	}
