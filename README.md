@@ -45,11 +45,11 @@ CREATE TABLE LOGS
 While on the server, you can create a user with this command :
 
 ```
-"CREATE USER 'compositelogger'@'localhost' IDENTIFIED BY 'Mystrongpassword1234$';"
+CREATE USER 'compositelogger'@'localhost' IDENTIFIED BY 'Mystrongpassword1234$';
 ```
 Then you need to grant the user access to our logging table, or else we will get an error :
 
 ```
-"GRANT ALL PRIVILEGES ON LOGGER.LOGS TO 'compositelogger'@'localhost';"
+GRANT ALL PRIVILEGES ON LOGGER.LOGS TO 'compositelogger'@'localhost';
 ```
 Here we granted all privileges on our "LOGS" table to our user named "compositelogger".
